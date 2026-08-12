@@ -14,7 +14,6 @@ def generate_report(df, filename="report.txt"):
         avg_area = df['Area'].mean()
         avg_bedrooms = df['Bedrooms'].mean()
 
-        # Write to file
         with open(filename, 'w') as file:
             file.write("=========================================\n")
             file.write("      HOUSE PRICE ANALYTICS REPORT       \n")

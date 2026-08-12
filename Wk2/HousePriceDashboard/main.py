@@ -61,17 +61,14 @@ def main():
         print("\n--- Step 3: Generating Visualizations ---")
         visualizer.generate_all_visualizations(df, output_dir=os.path.join(frontend_dir, 'images'), prefix=f"{ds_id}_", dataset_type=ds_type)
         
-        # Prepare Data for Frontend
         top_10 = df.head(10).to_dict(orient='records')
         operations = dataset_manager.get_operations()
         
-        # Clean NaN for JSON
         for row in top_10:
             for k, v in row.items():
                 if isinstance(v, float) and math.isnan(v):
                     row[k] = None
                     
-        # Define chart titles depending on type
         if ds_type == "housing":
             chart_titles = ["Average Price by Location", "Price Distribution", "Area vs Price", "Price by Location"]
         else:

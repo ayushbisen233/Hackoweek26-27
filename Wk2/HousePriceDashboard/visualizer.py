@@ -100,7 +100,6 @@ def plot_netflix_rating_bar(df, save_path):
 
 def plot_netflix_country_bar(df, save_path):
     plt.figure(figsize=(8, 5))
-    # Exclude Unknown for better chart
     filtered = df[df['Country'] != 'Unknown']
     counts = filtered['Country'].value_counts().head(5)
     plt.bar(counts.index, counts.values, color='#e50914')

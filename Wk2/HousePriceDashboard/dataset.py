@@ -39,22 +39,18 @@ class HouseDataset:
 
         initial_rows = len(self.df)
         
-        # 1. Remove duplicates
         self.df.drop_duplicates(inplace=True)
         dup_msg = f"Removed {initial_rows - len(self.df)} duplicate records."
         self.operations.append(dup_msg)
         print(dup_msg)
         
-        # 2. Handle missing values
         missing_count = self.df.isnull().sum().sum()
-        # Fill missing numeric values with the median of the column
         numeric_cols = self.df.select_dtypes(include=[np.number]).columns
         for col in numeric_cols:
             if self.df[col].isnull().sum() > 0:
                 median_val = self.df[col].median()
                 self.df[col] = self.df[col].fillna(median_val)
                 
-        # Fill categorical with mode
         cat_cols = self.df.select_dtypes(include=['object']).columns
         for col in cat_cols:
             if self.df[col].isnull().sum() > 0:
@@ -65,7 +61,6 @@ class HouseDataset:
         self.operations.append(miss_msg)
         print(miss_msg)
                 
-        # Merge with location info
         self.df = pd.merge(self.df, self.loc_df, on='Location', how='left')
         merge_msg = "Merged dataset with location statistics (CrimeRate, SchoolRating)."
         self.operations.append(merge_msg)
@@ -106,13 +101,11 @@ class NetflixDataset:
 
         initial_rows = len(self.df)
         
-        # 1. Remove duplicates
         self.df.drop_duplicates(inplace=True)
         dup_msg = f"Removed {initial_rows - len(self.df)} duplicate records."
         self.operations.append(dup_msg)
         print(dup_msg)
         
-        # 2. Handle missing categorical values
         missing_count = self.df.isnull().sum().sum()
         cat_cols = ['Director', 'Country']
         for col in cat_cols:
